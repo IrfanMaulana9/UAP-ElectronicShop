@@ -3,16 +3,16 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class LoginFrame extends JFrame {
-    private ArrayList<User> users;
-    private JTextField usernameField;
-    private JPasswordField passwordField;
+    public ArrayList<User> users;
+    public JTextField usernameField;
+    public JPasswordField passwordField;
 
     public LoginFrame() {
         initializeUsers();
         initializeUI();
     }
 
-    private void initializeUsers() {
+    public void initializeUsers() {
         users = new ArrayList<>();
         // Menambahkan default admin
         users.add(new User("admin", "admin123", "ADMIN"));
@@ -20,7 +20,7 @@ public class LoginFrame extends JFrame {
         users.add(new User("customer", "customer123", "CUSTOMER"));
     }
 
-    private void initializeUI() {
+    public void initializeUI() {
         setTitle("Login Toko Elektronik");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(300, 200);
@@ -56,7 +56,7 @@ public class LoginFrame extends JFrame {
         add(panel);
     }
 
-    private void login() {
+    public void login() {
         String username = usernameField.getText();
         String password = new String(passwordField.getPassword());
 

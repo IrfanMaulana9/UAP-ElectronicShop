@@ -5,14 +5,14 @@ import java.util.ArrayList;
 import java.awt.event.*;
 
 public class CustomerFrame extends JFrame {
-    private ArrayList<Product> products;
-    private ArrayList<CartItem> cart;
-    private DefaultTableModel productTableModel;
-    private DefaultTableModel cartTableModel;
-    private JTable productTable;
-    private JTable cartTable;
-    private JLabel totalLabel;
-    private double totalAmount = 0.0;
+    public ArrayList<Product> products;
+    public ArrayList<CartItem> cart;
+    public DefaultTableModel productTableModel;
+    public DefaultTableModel cartTableModel;
+    public JTable productTable;
+    public JTable cartTable;
+    public JLabel totalLabel;
+    public double totalAmount = 0.0;
 
     public CustomerFrame() {
         products = loadProducts();
@@ -21,7 +21,7 @@ public class CustomerFrame extends JFrame {
         updateProductTable();
     }
 
-    private void initializeUI() {
+    public void initializeUI() {
         setTitle("Toko Elektronik - Customer Panel");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1000, 600);
@@ -51,7 +51,7 @@ public class CustomerFrame extends JFrame {
         add(mainPanel);
     }
 
-    private JPanel createProductPanel() {
+    public JPanel createProductPanel() {
         JPanel panel = new JPanel(new BorderLayout(5, 5));
         panel.setBorder(BorderFactory.createTitledBorder("Daftar Produk"));
 
@@ -78,7 +78,7 @@ public class CustomerFrame extends JFrame {
         return panel;
     }
 
-    private JPanel createCartPanel() {
+    public JPanel createCartPanel() {
         JPanel panel = new JPanel(new BorderLayout(5, 5));
         panel.setBorder(BorderFactory.createTitledBorder("Keranjang Belanja"));
         panel.setPreferredSize(new Dimension(300, 0));
@@ -122,7 +122,7 @@ public class CustomerFrame extends JFrame {
         return panel;
     }
 
-    private void addToCart() {
+    public void addToCart() {
         int selectedRow = productTable.getSelectedRow();
         if (selectedRow == -1) {
             showError("Pilih produk yang ingin dibeli!");
@@ -151,7 +151,7 @@ public class CustomerFrame extends JFrame {
         }
     }
 
-    private void removeFromCart() {
+    public void removeFromCart() {
         int selectedRow = cartTable.getSelectedRow();
         if (selectedRow == -1) {
             showError("Pilih item yang ingin dihapus dari keranjang!");
@@ -171,7 +171,7 @@ public class CustomerFrame extends JFrame {
         updateTotal();
     }
 
-    private void checkout() {
+ public void checkout() {
         if (cart.isEmpty()) {
             showError("Keranjang belanja kosong!");
             return;
@@ -197,12 +197,12 @@ public class CustomerFrame extends JFrame {
         }
     }
 
-    private void updateTables() {
+    public void updateTables() {
         updateProductTable();
         updateCartTable();
     }
 
-    private void updateProductTable() {
+    public void updateProductTable() {
         productTableModel.setRowCount(0);
         for (Product product : products) {
             productTableModel.addRow(new Object[]{
@@ -214,7 +214,7 @@ public class CustomerFrame extends JFrame {
         }
     }
 
-    private void updateCartTable() {
+    public void updateCartTable() {
         cartTableModel.setRowCount(0);
         for (CartItem item : cart) {
             cartTableModel.addRow(new Object[]{
@@ -226,32 +226,32 @@ public class CustomerFrame extends JFrame {
         }
     }
 
-    private void updateTotal() {
+    public void updateTotal() {
         totalAmount = cart.stream()
                 .mapToDouble(CartItem::getTotal)
                 .sum();
         totalLabel.setText(String.format("Total: Rp %s", formatPrice(totalAmount)));
     }
 
-    private String formatPrice(double price) {
+    public String formatPrice(double price) {
         return String.format("%,.2f", price);
     }
 
-    private Product findProductById(String id) {
+    public Product findProductById(String id) {
         return products.stream()
                 .filter(p -> p.getId().equals(id))
                 .findFirst()
                 .orElse(null);
     }
 
-    private CartItem findCartItemByProduct(Product product) {
+    public CartItem findCartItemByProduct(Product product) {
         return cart.stream()
                 .filter(item -> item.getProduct().getId().equals(product.getId()))
                 .findFirst()
                 .orElse(null);
     }
 
-    private ArrayList<Product> loadProducts() {
+    public  ArrayList<Product> loadProducts() {
         try {
             return FileHandler.loadProducts();
         } catch (Exception e) {
@@ -260,7 +260,7 @@ public class CustomerFrame extends JFrame {
         }
     }
 
-    private void saveProducts(ArrayList<Product> products) {
+    public void saveProducts(ArrayList<Product> products) {
         try {
             FileHandler.saveProducts(products);
         } catch (Exception e) {
@@ -268,26 +268,26 @@ public class CustomerFrame extends JFrame {
         }
     }
 
-    private void logout() {
+    public  void logout() {
         dispose();
         SwingUtilities.invokeLater(() -> {
             new LoginFrame().setVisible(true);
         });
     }
 
-    private void showError(String message) {
+    public void showError(String message) {
         JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
-    private void showSuccess(String message) {
+    public void showSuccess(String message) {
         JOptionPane.showMessageDialog(this, message, "Sukses", JOptionPane.INFORMATION_MESSAGE);
     }
 }
 
 // Helper class untuk item dalam keranjang
 class CartItem {
-    private Product product;
-    private int quantity;
+    public Product product;
+    public int quantity;
 
     public CartItem(Product product) {
         this.product = product;

@@ -4,19 +4,19 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class AdminFrame extends JFrame {
-    private ArrayList<Product> products;
-    private JTable productTable;
-    private DefaultTableModel tableModel;
-    private JTextField idField, nameField, priceField, stockField;
-    private JLabel imageLabel;
-    private ImageIcon currentImage;
+    public ArrayList<Product> products;
+    public JTable productTable;
+    public DefaultTableModel tableModel;
+    public JTextField idField, nameField, priceField, stockField;
+    public JLabel imageLabel;
+    public ImageIcon currentImage;
 
     public AdminFrame() {
         products = loadProducts(); // Load existing products
         initializeUI();
     }
 
-    private void initializeUI() {
+    public void initializeUI() {
         setTitle("Toko Elektronik - Admin Panel");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(900, 600);
@@ -104,7 +104,7 @@ public class AdminFrame extends JFrame {
         updateTable();
     }
 
-    private void browseImage() {
+    public void browseImage() {
         JFileChooser chooser = new JFileChooser();
         if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             try {
@@ -117,20 +117,20 @@ public class AdminFrame extends JFrame {
         }
     }
 
-    private void addFormField(JPanel panel, String label, JTextField field, GridBagConstraints gbc, int row) {
+    public void addFormField(JPanel panel, String label, JTextField field, GridBagConstraints gbc, int row) {
         gbc.gridx = 0; gbc.gridy = row;
         panel.add(new JLabel(label), gbc);
         gbc.gridx = 1;
         panel.add(field, gbc);
     }
 
-    private void addButton(JPanel panel, String text, java.awt.event.ActionListener listener) {
+    public void addButton(JPanel panel, String text, java.awt.event.ActionListener listener) {
         JButton button = new JButton(text);
         button.addActionListener(listener);
         panel.add(button);
     }
 
-    private void logout() {
+    public void logout() {
         saveProducts(products);
         dispose();
         SwingUtilities.invokeLater(() -> {
@@ -138,7 +138,7 @@ public class AdminFrame extends JFrame {
         });
     }
 
-    private ArrayList<Product> loadProducts() {
+    public  ArrayList<Product> loadProducts() {
         try {
             return FileHandler.loadProducts();
         } catch (Exception e) {
@@ -147,7 +147,7 @@ public class AdminFrame extends JFrame {
         }
     }
 
-    private void saveProducts(ArrayList<Product> products) {
+    public void saveProducts(ArrayList<Product> products) {
         try {
             FileHandler.saveProducts(products);
         } catch (Exception e) {
@@ -155,7 +155,7 @@ public class AdminFrame extends JFrame {
         }
     }
 
-    private void addProduct() {
+    public void addProduct() {
         try {
             validateInput();
             Product product = new Product(
@@ -175,7 +175,7 @@ public class AdminFrame extends JFrame {
         }
     }
 
-    private void updateProduct() {
+    public void updateProduct() {
         try {
             validateInput();
             int selectedRow = productTable.getSelectedRow();
@@ -200,7 +200,7 @@ public class AdminFrame extends JFrame {
         }
     }
 
-    private void deleteProduct() {
+    public void deleteProduct() {
         try {
             int selectedRow = productTable.getSelectedRow();
             if (selectedRow == -1) {
@@ -226,7 +226,7 @@ public class AdminFrame extends JFrame {
         }
     }
 
-    private void selectProduct(int row) {
+    public void selectProduct(int row) {
         Product product = products.get(row);
         idField.setText(product.getId());
         nameField.setText(product.getName());
@@ -238,7 +238,7 @@ public class AdminFrame extends JFrame {
         }
     }
 
-    private void validateInput() throws Exception {
+    public void validateInput() throws Exception {
         if (idField.getText().trim().isEmpty() ||
                 nameField.getText().trim().isEmpty() ||
                 priceField.getText().trim().isEmpty() ||
@@ -259,7 +259,7 @@ public class AdminFrame extends JFrame {
         }
     }
 
-    private void updateTable() {
+    public void updateTable() {
         tableModel.setRowCount(0);
         for (Product product : products) {
             tableModel.addRow(new Object[]{
@@ -271,7 +271,7 @@ public class AdminFrame extends JFrame {
         }
     }
 
-    private void clearFields() {
+    public void clearFields() {
         idField.setText("");
         nameField.setText("");
         priceField.setText("");
@@ -281,11 +281,11 @@ public class AdminFrame extends JFrame {
         productTable.clearSelection();
     }
 
-    private void showError(String message) {
+    public void showError(String message) {
         JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
-    private void showSuccess(String message) {
+    public void showSuccess(String message) {
         JOptionPane.showMessageDialog(this, message, "Success", JOptionPane.INFORMATION_MESSAGE);
     }
 }

@@ -1,6 +1,5 @@
 import org.junit.jupiter.api.*;
 import javax.swing.*;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CustomerFrameTest {
@@ -9,39 +8,46 @@ public class CustomerFrameTest {
 
     @BeforeEach
     public void setUp() {
+        // Inisialisasi CustomerFrame sebelum setiap tes
         customerFrame = new CustomerFrame();
     }
 
     @Test
-    public void testAddToCart() {
-        customerFrame.productTableModel.addRow(new Object[]{"1", "Product A", 100.0, 10});
-        customerFrame.productTable.setRowSelectionInterval (0, 0);
-        customerFrame.addToCart();
+    public void testaddandRemoveFromCart() {
+        // Membuat produk baru untuk tes ini
+        customerFrame.productTableModel.addRow(new Object[]{"2", "Product B", 500.0, 20});
 
-        assertEquals(1, customerFrame.cart.size());
-        assertEquals("Product A", customerFrame.cart.get(0).getProduct().getName());
-    }
-
-    @Test
-    public void testRemoveFromCart() {
-        customerFrame.productTableModel.addRow(new Object[]{"1", "Product A", 100.0, 10});
+        // Memilih produk pertama yang akan ditambahkan ke keranjang
         customerFrame.productTable.setRowSelectionInterval(0, 0);
         customerFrame.addToCart();
 
+        // Memastikan produk ada di keranjang sebelum dihapus
+        assertEquals(1, customerFrame.cart.size(), "Keranjang harus berisi 1 produk sebelum dihapus.");
+
+        // Memilih produk dari keranjang untuk dihapus
         customerFrame.cartTable.setRowSelectionInterval(0, 0);
         customerFrame.removeFromCart();
 
-        assertTrue(customerFrame.cart.isEmpty());
+        // Memastikan keranjang kosong setelah penghapusan produk
+        assertTrue(customerFrame.cart.isEmpty(), "Keranjang harus kosong setelah penghapusan.");
     }
 
     @Test
     public void testCheckout() {
-        customerFrame.productTableModel.addRow(new Object[]{"1", "Product A", 100.0, 10});
+        // Membuat produk baru untuk tes ini
+        customerFrame.productTableModel.addRow(new Object[]{"3", "Product C", 750.0, 15});
+
+        // Memilih produk pertama yang akan ditambahkan ke keranjang
         customerFrame.productTable.setRowSelectionInterval(0, 0);
         customerFrame.addToCart();
 
+        // Memastikan produk ada di keranjang sebelum checkout
+        assertEquals(1, customerFrame.cart.size(), "Keranjang harus berisi 1 produk sebelum checkout.");
+
+        // Melakukan checkout
         customerFrame.checkout();
 
-        assertTrue(customerFrame.cart.isEmpty());
+        // Memastikan keranjang kosong setelah checkout
+        assertTrue(customerFrame.cart.isEmpty(), "Keranjang harus kosong setelah checkout.");
     }
 }

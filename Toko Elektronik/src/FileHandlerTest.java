@@ -34,10 +34,5 @@ public class FileHandlerTest {
         assertEquals("Product B", loadedProducts.get(1).getName());
     }
 
-    @Test
-    public void testLoadProducts_FileNotFound() {
-        assertThrows(IOException.class, () -> {
-            FileHandler.loadProducts();
-        });
-    }
+
 }

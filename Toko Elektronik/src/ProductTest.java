@@ -6,10 +6,10 @@ public class ProductTest {
 
     @Test
     public void testProductGettersAndSetters() {
-        Product product = new Product("1", "Product A", 100.0, 10, null);
+        Product product = new Product("1", "Lenovo LOQ", 100.0, 10, null);
 
         assertEquals("1", product.getId());
-        assertEquals("Product A", product.getName());
+        assertEquals("Lenovo LOQ", product.getName());
         assertEquals(100.0, product.getPrice());
         assertEquals(10, product.getStock());
 
@@ -19,7 +19,7 @@ public class ProductTest {
 
     @Test
     public void testProductPriceCannotBeNegative() {
-        Product product = new Product("1", "Product A", -100.0, 10, null);
+        Product product = new Product("1", "Lenovo LOQ", -100.0, 10, null);
         assertTrue(product.getPrice() < 0, "Price should not be negative");
     }
 }

@@ -117,7 +117,7 @@ Berikut adalah file dan class utama yang digunakan dalam proyek ini:
 ## Kontak Pengembang
 Jika Anda memiliki pertanyaan atau saran, silakan hubungi:
 - **Email**: support@tokoelektronik.com
-- **Github**: [TokoElektronik](https://github.com/tokoelektronik)
+- **Github**: [TokoElektronik]((https://github.com/IrfanMaulana9/UAP-ElectronicShop.git))
 
 ---
 

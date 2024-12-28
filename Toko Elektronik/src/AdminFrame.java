@@ -2,6 +2,8 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.ArrayList;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 public class AdminFrame extends JFrame {
     public ArrayList<Product> products;
@@ -98,12 +100,60 @@ public class AdminFrame extends JFrame {
         mainPanel.add(scrollPane, BorderLayout.CENTER);
         mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 
+        // Tambahkan document listener untuk validasi real-time
+        priceField.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) { validatePrice(); }
+            public void insertUpdate(DocumentEvent e) { validatePrice(); }
+            public void removeUpdate(DocumentEvent e) { validatePrice(); }
+        });
+
+        stockField.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) { validateStock(); }
+            public void insertUpdate(DocumentEvent e) { validateStock(); }
+            public void removeUpdate(DocumentEvent e) { validateStock(); }
+        });
+
         add(mainPanel);
 
         // Load initial data
         updateTable();
     }
 
+    public void validatePrice() {
+        try {
+            String text = priceField.getText();
+            if (!text.isEmpty()) {
+                double price = Double.parseDouble(text);
+                if (price < 0) {
+                    priceField.setForeground(Color.RED);
+                    // Opsional: Tampilkan pesan error
+                    showError("Harga tidak boleh kurang dari 0!");
+                } else {
+                    priceField.setForeground(Color.BLACK);
+                }
+            }
+        } catch (NumberFormatException ex) {
+            priceField.setForeground(Color.RED);
+        }
+    }
+
+    public void validateStock() {
+        try {
+            String text = stockField.getText();
+            if (!text.isEmpty()) {
+                int stock = Integer.parseInt(text);
+                if (stock < 0) {
+                    stockField.setForeground(Color.RED);
+                    // Opsional: Tampilkan pesan error
+                    showError("Stok tidak boleh kurang dari 0!");
+                } else {
+                    stockField.setForeground(Color.BLACK);
+                }
+            }
+        } catch (NumberFormatException ex) {
+            stockField.setForeground(Color.RED);
+        }
+    }
     public void browseImage() {
         JFileChooser chooser = new JFileChooser();
         if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {

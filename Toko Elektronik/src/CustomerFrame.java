@@ -12,6 +12,7 @@ public class CustomerFrame extends JFrame {
     public JTable productTable;
     public JTable cartTable;
     public JLabel totalLabel;
+    public JLabel imageLabel; // New image label
     public double totalAmount = 0.0;
 
     public CustomerFrame() {
@@ -24,7 +25,7 @@ public class CustomerFrame extends JFrame {
     public void initializeUI() {
         setTitle("Toko Elektronik - Customer Panel");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1000, 600);
+        setSize(1200, 700); // Increased window size
         setLocationRelativeTo(null);
 
         // Menu Bar
@@ -40,15 +41,44 @@ public class CustomerFrame extends JFrame {
         JPanel mainPanel = new JPanel(new BorderLayout(10, 10));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        // Product Panel (Left Side)
+        // Create split pane for product list and details
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+        splitPane.setDividerLocation(600);
+
+        // Left panel containing product table and image
+        JPanel leftPanel = new JPanel(new BorderLayout(5, 5));
+
+        // Product Panel
         JPanel productPanel = createProductPanel();
-        mainPanel.add(productPanel, BorderLayout.CENTER);
+
+        // Image Panel
+        JPanel imagePanel = createImagePanel();
+
+        leftPanel.add(productPanel, BorderLayout.CENTER);
+        leftPanel.add(imagePanel, BorderLayout.SOUTH);
+
+        splitPane.setLeftComponent(leftPanel);
 
         // Cart Panel (Right Side)
         JPanel cartPanel = createCartPanel();
-        mainPanel.add(cartPanel, BorderLayout.EAST);
+        splitPane.setRightComponent(cartPanel);
 
+        mainPanel.add(splitPane, BorderLayout.CENTER);
         add(mainPanel);
+    }
+
+    public JPanel createImagePanel() {
+        JPanel panel = new JPanel(new BorderLayout(5, 5));
+        panel.setBorder(BorderFactory.createTitledBorder("Gambar Produk"));
+
+        // Initialize image label with fixed size
+        imageLabel = new JLabel();
+        imageLabel.setPreferredSize(new Dimension(200, 200));
+        imageLabel.setHorizontalAlignment(JLabel.CENTER);
+        imageLabel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+
+        panel.add(imageLabel, BorderLayout.CENTER);
+        return panel;
     }
 
     public JPanel createProductPanel() {
@@ -66,6 +96,13 @@ public class CustomerFrame extends JFrame {
         productTable = new JTable(productTableModel);
         JScrollPane productScrollPane = new JScrollPane(productTable);
 
+        // Add selection listener to update image when product is selected
+        productTable.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                updateSelectedProductImage();
+            }
+        });
+
         // Button Panel
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JButton addToCartButton = new JButton("Tambah ke Keranjang");
@@ -77,6 +114,26 @@ public class CustomerFrame extends JFrame {
 
         return panel;
     }
+
+    private void updateSelectedProductImage() {
+        int selectedRow = productTable.getSelectedRow();
+        if (selectedRow != -1) {
+            String productId = productTableModel.getValueAt(selectedRow, 0).toString();
+            Product product = findProductById(productId);
+            if (product != null && product.getImage() != null) {
+                // Scale the image to fit the label while maintaining aspect ratio
+                ImageIcon icon = product.getImage();
+                Image image = icon.getImage();
+                Image scaledImage = image.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+                imageLabel.setIcon(new ImageIcon(scaledImage));
+            }
+        } else {
+            imageLabel.setIcon(null);
+            imageLabel.setText("");
+        }
+    }
+
+
 
     public JPanel createCartPanel() {
         JPanel panel = new JPanel(new BorderLayout(5, 5));

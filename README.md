@@ -116,7 +116,8 @@ Berikut adalah file dan class utama yang digunakan dalam proyek ini:
 
 ## Kontak Pengembang
 Jika Anda memiliki pertanyaan atau saran, silakan hubungi:
-- *IrfanMaulana9* di dalam github
+- **IrfanMaulana9**: [IrfanMaulana9](https://github.com/IrfanMaulana9)  
+- **diekatz3**: [diekatz3](https://github.com/diekatz3)
 - *Github*: [TokoElektronik](https://github.com/IrfanMaulana9/UAP-ElectronicShop.git)
 
 ---

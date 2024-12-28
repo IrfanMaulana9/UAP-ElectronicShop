@@ -14,17 +14,7 @@ Proyek ini adalah sebuah sistem manajemen toko elektronik berbasis GUI (Graphica
    - Menghapus produk dari daftar.
    - Menyimpan dan memuat data produk menggunakan file.
 
-3. *Kategori Produk*
-   - Produk dikelompokkan berdasarkan kategori seperti:
-     - TV
-     - Laptop
-     - Ponsel
-     - Mesin Cuci
-     - AC
-     - Kulkas
 
-4. *Pengelompokan Produk untuk Customer*
-   - Customer dapat memfilter produk berdasarkan kategori tertentu.
 
 ---
 
